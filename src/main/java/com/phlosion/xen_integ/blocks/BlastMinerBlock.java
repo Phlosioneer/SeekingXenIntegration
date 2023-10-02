@@ -113,14 +113,18 @@ public class BlastMinerBlock extends DirectionalBlock {
 	public void blast(BlockState state, Level level, BlockPos pos) {
 		Direction dir = state.getValue(FACING).getOpposite();
 		var targetBlockPos = pos.relative(dir);
-		if (state.getValue(PRIMED) && !level.getBlockState(targetBlockPos).is(immuneTag)) {
+		if (state.getValue(PRIMED)) {
 			level.setBlockAndUpdate(pos, state.setValue(PRIMED, false));
-			level.destroyBlock(targetBlockPos, false);
 			var damageSource = DamageSource.explosion((LivingEntity) null);
 			// The explosion is coming from within a block that has near-infinite explosion resistance.
 			// Need to make a special damage calculator that ignores this miner.
 			var calc = new SelfIgnoringExplosionCalculator(pos);
 			level.explode(null, damageSource, calc, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, explosionSize, false, Explosion.BlockInteraction.DESTROY);
+
+			// This is done after the explosion to allow the block to absorb some of the blast.
+			if (!level.getBlockState(targetBlockPos).is(immuneTag)) {
+				level.destroyBlock(targetBlockPos, false);
+			}
 		}
 	}
 
