@@ -1,0 +1,10 @@
+{
+	"itemGroup.xen_integ": "Seeking Xen Integration",
+	
+	"block.xen_integ.red_bedrock": "Red Bedrock",
+	"block.xen_integ.purple_bedrock": "Purple Bedrock",
+	
+	"block.xen_integ.red_blast_miner": "Red Blast Miner",
+	"block.xen_integ.purple_blast_miner": "Purple Blast Miner",
+	"block.xen_integ.black_blast_miner": "Black Blast Miner"
+}
